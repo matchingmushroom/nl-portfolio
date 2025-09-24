@@ -1,304 +1,545 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nirmal Lamsal - Runner & Cyclist</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('http://static.photos/sport/1200x630/42');
-            background-size: cover;
-            background-position: center;
-        }
-        .gallery-item {
-            transition: all 0.3s ease;
-        }
-        .gallery-item:hover {
-            transform: scale(1.03);
-        }
-        #lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        #lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nirmal Lamsal — Runner · Cyclist · Ultra-Marathoner</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Lightbox2 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --electric:#0077FF;
+      --neon:#FF4500;
+      --navy:#071428;
+      --mid:#0f2a44;
+      --card:#0e2436;
+      --muted:#9fb0c6;
+      --white:#ffffff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--white);
+      background:linear-gradient(180deg,#071428 0%, #081a2c 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ---------- HEADER ---------- */
+    header{
+      position:sticky;
+      top:0;
+      z-index:1200;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(7,20,40,0.85), rgba(7,20,40,0.55));
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--white);font-weight:900;font-family:"Montserrat",sans-serif}
+    .brand .mark{
+      width:46px;height:46px;border-radius:8px;
+      background: linear-gradient(135deg,var(--electric),var(--neon));
+      display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;
+      box-shadow:0 6px 18px rgba(0,0,0,0.45);
+    }
+    .nav-links{display:flex;gap:18px;align-items:center}
+    .nav-links a{color:var(--white);text-decoration:none;font-weight:600;font-size:0.95rem;opacity:0.95}
+    .nav-links a:hover{color:var(--neon)}
+
+    /* Mobile */
+    @media (max-width:840px){
+      .nav-links{display:none}
+    }
+
+    /* ---------- HERO ---------- */
+    .hero{
+      padding:60px 0 40px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:72vh;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      background: linear-gradient(180deg, rgba(7,20,40,0.45), rgba(7,20,40,0.6));
+      pointer-events:none;
+    }
+    .hero-inner{position:relative;z-index:2;display:flex;gap:40px;align-items:center;max-width:1200px;padding:0 20px}
+    .hero-left{flex:1;min-width:320px}
+    .hero h1{
+      margin:0;font-family:"Montserrat",sans-serif;font-size:clamp(1.8rem,3.6vw,3.6rem);
+      line-height:1.02;background:linear-gradient(90deg,var(--white),#dbeeff);
+      -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;
+      letter-spacing:-0.5px;
+    }
+    .hero p{color:var(--muted);margin:14px 0 20px;font-size:1.05rem;max-width:60ch}
+    .cta-row{display:flex;gap:14px;align-items:center}
+    .btn{
+      display:inline-block;padding:12px 20px;border-radius:10px;font-weight:700;text-decoration:none;
+      cursor:pointer;border:none;
+    }
+    .btn-primary{
+      background:linear-gradient(90deg,var(--electric),var(--neon));
+      color:#fff;box-shadow:0 12px 30px rgba(0,119,255,0.12);
+    }
+    .btn-ghost{
+      background:transparent;border:2px solid rgba(255,255,255,0.08);color:var(--white)
+    }
+
+    /* Hero artwork */
+    .hero-right{flex:1;display:flex;justify-content:center}
+    .hero-card{
+      width:380px;max-width:44vw;border-radius:18px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.15));
+      border: 1px solid rgba(255,255,255,0.04);box-shadow: 0 20px 60px rgba(2,8,20,0.6);
+    }
+    .hero-card img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* ---------- ANGLED DIVIDER ---------- */
+    .divider{
+      height:60px;background:transparent;overflow:hidden;
+    }
+    .divider svg{display:block;width:100%;height:100%}
+
+    /* ---------- ABOUT ---------- */
+    section{padding:64px 0}
+    .about{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+    .about-inner{display:grid;grid-template-columns: 360px 1fr;gap:34px;align-items:center}
+    .profile-photo{width:100%;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.04)}
+    .profile-photo img{width:100%;display:block}
+    .about .title{font-family:"Montserrat";font-size:1.35rem;color:var(--electric);margin-bottom:8px}
+    .about p{color:var(--muted);line-height:1.6;font-size:1rem}
+
+    @media (max-width:980px){
+      .about-inner{grid-template-columns:1fr; text-align:center}
+      .profile-photo{max-width:360px;margin:0 auto}
+    }
+
+    /* ---------- MARATHONS (DARK) ---------- */
+    #marathons{
+      background: linear-gradient(135deg,#030816 0%, #081b2f 100%);
+      border-top:1px solid rgba(255,255,255,0.02);
+      padding-top:72px;padding-bottom:72px;
+    }
+    #marathons .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    #marathons h2{color:var(--neon);margin:0;font-family:"Montserrat"}
+    .marathon-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;margin-top:28px;
+    }
+    .marathon-card{
+      background:var(--card);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:center;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .marathon-logo{width:78px;height:78px;flex-shrink:0;border-radius:8px;background:#071428;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .marathon-logo img{width:100%;height:100%;object-fit:contain;display:block}
+    .marathon-info h4{margin:0;font-size:1rem;color:#fff}
+    .marathon-info p{margin:6px 0 0;color:var(--muted);font-size:0.92rem}
+    .marathon-meta{margin-top:8px;color:rgba(255,255,255,0.6);font-size:0.85rem}
+
+    @media (max-width:1100px){
+      .marathon-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:620px){
+      .marathon-grid{grid-template-columns:1fr}
+    }
+
+    /* ---------- GALLERY ---------- */
+    #gallery{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding-bottom:32px}
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    .gallery-grid a{display:block;border-radius:12px;overflow:hidden;display:block;border:1px solid rgba(255,255,255,0.04)}
+    .gallery-grid img{width:100%;height:220px;object-fit:cover;display:block;vertical-align:middle}
+
+    /* ---------- SPONSORSHIP ---------- */
+    #sponsorship{padding:64px 0;background:linear-gradient(90deg,var(--electric),var(--neon))}
+    .sponsor-inner{max-width:980px;margin:0 auto;text-align:center;padding:40px;border-radius:14px;color:#0b1726;background:linear-gradient(180deg,rgba(255,255,255,0.14),rgba(0,0,0,0.06))}
+    .sponsor-inner h2{margin:0;font-family:"Montserrat";font-size:1.7rem}
+    .sponsor-inner p{color:#071428;margin-top:12px;font-size:1rem}
+    .sponsor-row{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+    /* ---------- BLOG ---------- */
+    #blog .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .card{background:var(--card);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03)}
+    .card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+    .card h3{margin:12px 0 6px;font-size:1.05rem}
+    .card p{margin:0;color:var(--muted);font-size:0.95rem}
+
+    /* ---------- CONTACT ---------- */
+    #contact{background:linear-gradient(180deg,#071428,#062036);padding:80px 0}
+    .contact-box{max-width:900px;margin:0 auto;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));border-radius:12px;padding:28px;border:1px solid rgba(255,255,255,0.03)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .contact-grid input,.contact-grid textarea{
+      width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--white);font-size:0.98rem
+    }
+    .contact-grid textarea{grid-column:1/3;min-height:150px;resize:vertical}
+    .contact-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:12px}
+    .muted-t{color:var(--muted);font-size:0.95rem}
+
+    @media (max-width:880px){
+      .contact-grid{grid-template-columns:1fr}
+      .contact-grid textarea{grid-column:auto}
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer{padding:28px 0;background:#031021;border-top:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+    .footer-grid{display:flex;gap:22px;justify-content:space-between;flex-wrap:wrap;align-items:flex-start}
+    .footer-col{min-width:180px}
+    .socials a{display:inline-block;margin-right:8px;color:var(--white);text-decoration:none;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02)}
+    .copyright{margin-top:14px;color:rgba(255,255,255,0.18);font-size:0.92rem}
+  </style>
 </head>
-<body class="font-sans bg-gray-50">
-    <!-- Header -->
-    <header class="fixed w-full bg-white shadow-md z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-orange-600">NIRMAL LAMSAL</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#home" class="text-gray-700 hover:text-orange-600 transition">Home</a>
-                <a href="#about" class="text-gray-700 hover:text-orange-600 transition">About</a>
-                <a href="#marathons" class="text-gray-700 hover:text-orange-600 transition">Marathons</a>
-                <a href="#gallery" class="text-gray-700 hover:text-orange-600 transition">Gallery</a>
-                <a href="#sponsorship" class="text-gray-700 hover:text-orange-600 transition">Sponsorship</a>
-                <a href="#blog" class="text-gray-700 hover:text-orange-600 transition">Blog</a>
-                <a href="#contact" class="text-gray-700 hover:text-orange-600 transition">Contact</a>
-            </nav>
-            <button class="md:hidden focus:outline-none" id="menu-toggle">
-                <i data-feather="menu"></i>
-            </button>
-        </div>
-        <!-- Mobile Menu -->
-        <div class="md:hidden hidden bg-white w-full px-4 py-2 shadow-md" id="mobile-menu">
-            <div class="flex flex-col space-y-3">
-                <a href="#home" class="text-gray-700 hover:text-orange-600 transition py-1">Home</a>
-                <a href="#about" class="text-gray-700 hover:text-orange-600 transition py-1">About</a>
-                <a href="#marathons" class="text-gray-700 hover:text-orange-600 transition py-1">Marathons</a>
-                <a href="#gallery" class="text-gray-700 hover:text-orange-600 transition py-1">Gallery</a>
-                <a href="#sponsorship" class="text-gray-700 hover:text-orange-600 transition py-1">Sponsorship</a>
-                <a href="#blog" class="text-gray-700 hover:text-orange-600 transition py-1">Blog</a>
-                <a href="#contact" class="text-gray-700 hover:text-orange-600 transition py-1">Contact</a>
-            </div>
-        </div>
-    </header>
+<body>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-white pt-20">
-        <div class="container mx-auto px-4 text-center" data-aos="fade-up">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">Nirmal Lamsal</h1>
-            <p class="text-xl md:text-2xl mb-8">Passionate Runner, Cyclist & Ultra-Marathoner</p>
-            <a href="#about" class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-full font-semibold inline-block transition">My Journey</a>
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">
+          <div class="mark">NL</div>
+          <div>
+            <div style="font-size:0.95rem">Nirmal Lamsal</div>
+            <div style="font-size:0.72rem;color:var(--muted)">Runner · Cyclist · Ultra-Marathoner</div>
+          </div>
         </div>
+
+        <div class="nav-links" aria-label="Primary">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#marathons">Marathons</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#blog">Blog</a>
+          <a href="#sponsorship">Sponsorship</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-inner container">
+        <div class="hero-left">
+          <h1>Nirmal Lamsal — Run. Ride. Repeat.</h1>
+          <p>Passionate runner & cyclist. 100,000+ KM logged, Peyong Frozen Lake finisher, and preparing for world majors. Join the journey and power the next chapter.</p>
+
+          <div class="cta-row">
+            <a href="#sponsorship" class="btn btn-primary">Join My Journey</a>
+            <a href="#contact" class="btn btn-ghost">Contact Team</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-card">
+            <!-- royalty-free image from Pexels (placeholder) -->
+            <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=700" alt="Nirmal running">
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">About Me</h2>
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8" data-aos="fade-right">
-                    <img src="http://static.photos/sport/640x360/10" alt="Nirmal Running" class="rounded-lg shadow-xl w-full">
-                </div>
-                <div class="md:w-1/2" data-aos="fade-left">
-                    <p class="text-gray-700 mb-4">Nirmal Lamsal loves to run and cycle. He has already run over 100,000 KM.</p>
-                    <p class="text-gray-700 mb-4">He has participated in extreme marathons like the Peyong Frozen Lake Marathon, running from sea level to 4000 meters altitude.</p>
-                    <p class="text-gray-700 mb-4">He is a passionate cyclist and is currently training for ultra-marathons.</p>
-                    <p class="text-gray-700">Professionally, he is a banker with over 15 years of experience.</p>
-                </div>
-            </div>
+    <!-- angled divider -->
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+        <path d="M0,0 L1200,0 L0,60 Z" fill="#081a2c"></path>
+      </svg>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="about container">
+      <div class="about-inner">
+        <div class="profile-photo">
+          <img src="https://images.pexels.com/photos/936094/pexels-photo-936094.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800" alt="Nirmal portrait">
         </div>
+        <div>
+          <div class="title">About Nirmal</div>
+          <h3 style="margin:0;font-family:Montserrat;font-size:1.45rem;color:var(--white)">Runner · Cyclist · Banker (15+ yrs)</h3>
+          <p style="margin-top:14px;color:var(--muted)">
+            Nirmal Lamsal loves to run and cycle. He has already run <strong>100,000 KM</strong>. He has participated in extreme marathons such as the <em>Peyong Frozen Lake Marathon</em> — ascending from sea level to 4000 meters. He is an avid cyclist and currently training for multiple ultra-marathons while balancing a banking career spanning over 15 years.
+          </p>
+
+          <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+            <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;font-weight:700;color:var(--white)">100,000+ KM</div>
+            <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;font-weight:700;color:var(--white)">Peyong Frozen Lake</div>
+            <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;font-weight:700;color:var(--white)">Ultra Training</div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Marathons Section -->
-    <section id="marathons" class="py-20 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Marathon Participation</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md text-center" data-aos="zoom-in">
-                    <img src="http://static.photos/black/200x200/1" alt="Marathon Logo" class="h-20 mx-auto mb-4">
-                    <h3 class="font-bold">Peyong Frozen Lake</h3>
-                    <p class="text-gray-600">2023</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md text-center" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="http://static.photos/black/200x200/2" alt="Marathon Logo" class="h-20 mx-auto mb-4">
-                    <h3 class="font-bold">Kathmandu Marathon</h3>
-                    <p class="text-gray-600">2022</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md text-center" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="http://static.photos/black/200x200/3" alt="Marathon Logo" class="h-20 mx-auto mb-4">
-                    <h3 class="font-bold">Himalayan Ultra</h3>
-                    <p class="text-gray-600">2021</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md text-center" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="http://static.photos/black/200x200/4" alt="Marathon Logo" class="h-20 mx-auto mb-4">
-                    <h3 class="font-bold">Annapurna Trail</h3>
-                    <p class="text-gray-600">2020</p>
-                </div>
-            </div>
+    <!-- MARATHONS (dark background requested) -->
+    <section id="marathons" aria-label="Marathons">
+      <div class="container">
+        <div class="section-head">
+          <h2>Marathon Participation</h2>
+          <div style="color:var(--muted);font-size:0.95rem">National & International events — logos, type & participation (dummy data)</div>
         </div>
+
+        <div class="marathon-grid" style="margin-top:22px">
+          <!-- Card 1: Tenzing-Hillary Everest Marathon (Nepal) -->
+          <div class="marathon-card">
+            <div class="marathon-logo">
+              <img src="https://via.placeholder.com/150x150?text=Everest+Marathon" alt="Everest Marathon logo">
+            </div>
+            <div class="marathon-info">
+              <h4>Tenzing-Hillary Everest Marathon</h4>
+              <p>Type: High Altitude Trail Marathon (Extreme)</p>
+              <div class="marathon-meta">Participation: 2017 (Finish) · 2019 (DNF) · 2023 (Finish)</div>
+            </div>
+          </div>
+
+          <!-- Card 2: Pokhara Marathon (Nepal) -->
+          <div class="marathon-card">
+            <div class="marathon-logo">
+              <img src="https://via.placeholder.com/150x150?text=Pokhara+Marathon" alt="Pokhara Marathon logo">
+            </div>
+            <div class="marathon-info">
+              <h4>Pokhara Marathon</h4>
+              <p>Type: Road Marathon / City Marathon</p>
+              <div class="marathon-meta">Participation: 2018 · 2020 · 2022</div>
+            </div>
+          </div>
+
+          <!-- Card 3: Peyong Frozen Lake Marathon (Nepal) -->
+          <div class="marathon-card">
+            <div class="marathon-logo">
+              <img src="https://via.placeholder.com/150x150?text=Peyong+Frozen" alt="Peyong Frozen Lake logo">
+            </div>
+            <div class="marathon-info">
+              <h4>Peyong Frozen Lake Marathon</h4>
+              <p>Type: Extreme Altitude & Cold-Weather Endurance</p>
+              <div class="marathon-meta">Participation: 2021 (Finish) · 2024 (Finish)</div>
+            </div>
+          </div>
+
+          <!-- Card 4: Kathmandu International Marathon -->
+          <div class="marathon-card">
+            <div class="marathon-logo">
+              <img src="https://via.placeholder.com/150x150?text=Kathmandu+Intl" alt="Kathmandu Marathon logo">
+            </div>
+            <div class="marathon-info">
+              <h4>Kathmandu International Marathon</h4>
+              <p>Type: Road Marathon / Charity Event</p>
+              <div class="marathon-meta">Participation: 2015 · 2016 · 2019</div>
+            </div>
+          </div>
+
+          <!-- Card 5: London Marathon (International) -->
+          <div class="marathon-card">
+            <div class="marathon-logo">
+              <img src="https://via.placeholder.com/150x150?text=London+Marathon" alt="London Marathon logo">
+            </div>
+            <div class="marathon-info">
+              <h4>London Marathon</h4>
+              <p>Type: World Major — Road Marathon</p>
+              <div class="marathon-meta">Participation: 2022 (Virtual) · 2025 (Planned)</div>
+            </div>
+          </div>
+
+          <!-- Card 6: Tokyo Marathon (International) -->
+          <div class="marathon-card">
+            <div class="marathon-logo">
+              <img src="https://via.placeholder.com/150x150?text=Tokyo+Marathon" alt="Tokyo Marathon logo">
+            </div>
+            <div class="marathon-info">
+              <h4>Tokyo Marathon</h4>
+              <p>Type: World Major — Road Marathon</p>
+              <div class="marathon-meta">Participation: 2023 (Finish)</div>
+            </div>
+          </div>
+
+          <!-- Card 7: Chicago Marathon (International) -->
+          <div class="marathon-card">
+            <div class="marathon-logo">
+              <img src="https://via.placeholder.com/150x150?text=Chicago+Marathon" alt="Chicago Marathon logo">
+            </div>
+            <div class="marathon-info">
+              <h4>Chicago Marathon</h4>
+              <p>Type: World Major — Road Marathon</p>
+              <div class="marathon-meta">Participation: Planned 2026</div>
+            </div>
+          </div>
+
+          <!-- Card 8: Ultra Trail Nepal (UTN) -->
+          <div class="marathon-card">
+            <div class="marathon-logo">
+              <img src="https://via.placeholder.com/150x150?text=Ultra+Trail+Nepal" alt="UTN logo">
+            </div>
+            <div class="marathon-info">
+              <h4>Ultra Trail Nepal (UTN)</h4>
+              <p>Type: Multi-day Ultra Trail</p>
+              <div class="marathon-meta">Participation: 2019 · 2021</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Gallery</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="gallery-item cursor-pointer" data-aos="zoom-in" onclick="openLightbox('http://static.photos/sport/640x360/5')">
-                    <img src="http://static.photos/sport/640x360/5" alt="Running" class="rounded-lg shadow-md w-full h-64 object-cover">
-                </div>
-                <div class="gallery-item cursor-pointer" data-aos="zoom-in" data-aos-delay="100" onclick="openLightbox('http://static.photos/sport/640x360/6')">
-                    <img src="http://static.photos/sport/640x360/6" alt="Cycling" class="rounded-lg shadow-md w-full h-64 object-cover">
-                </div>
-                <div class="gallery-item cursor-pointer" data-aos="zoom-in" data-aos-delay="200" onclick="openLightbox('http://static.photos/sport/640x360/7')">
-                    <img src="http://static.photos/sport/640x360/7" alt="Marathon" class="rounded-lg shadow-md w-full h-64 object-cover">
-                </div>
-                <div class="gallery-item cursor-pointer" data-aos="zoom-in" data-aos-delay="300" onclick="openLightbox('http://static.photos/sport/640x360/8')">
-                    <img src="http://static.photos/sport/640x360/8" alt="Training" class="rounded-lg shadow-md w-full h-64 object-cover">
-                </div>
-                <div class="gallery-item cursor-pointer" data-aos="zoom-in" data-aos-delay="400" onclick="openLightbox('http://static.photos/sport/640x360/9')">
-                    <img src="http://static.photos/sport/640x360/9" alt="Finish Line" class="rounded-lg shadow-md w-full h-64 object-cover">
-                </div>
-                <div class="gallery-item cursor-pointer" data-aos="zoom-in" data-aos-delay="500" onclick="openLightbox('http://static.photos/sport/640x360/10')">
-                    <img src="http://static.photos/sport/640x360/10" alt="Victory" class="rounded-lg shadow-md w-full h-64 object-cover">
-                </div>
-            </div>
-        </div>
-        <!-- Lightbox -->
-        <div id="lightbox" onclick="closeLightbox()">
-            <img id="lightbox-img" src="" alt="">
-        </div>
+    <!-- GALLERY -->
+    <section id="gallery" class="container" aria-label="Photo gallery">
+      <h2 style="color:var(--electric);margin-bottom:14px">Gallery</h2>
+      <div class="gallery-grid" aria-hidden="false">
+        <a href="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg" data-lightbox="gallery" data-title="Trail Run — Nepal">
+          <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600" alt="Trail run">
+        </a>
+        <a href="https://images.pexels.com/photos/936094/pexels-photo-936094.jpeg" data-lightbox="gallery" data-title="Cycling Training">
+          <img src="https://images.pexels.com/photos/936094/pexels-photo-936094.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600" alt="Cycling">
+        </a>
+        <a href="https://images.pexels.com/photos/618612/pexels-photo-618612.jpeg" data-lightbox="gallery" data-title="Marathon Finish">
+          <img src="https://images.pexels.com/photos/618612/pexels-photo-618612.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600" alt="Marathon">
+        </a>
+        <a href="https://images.pexels.com/photos/2402772/pexels-photo-2402772.jpeg" data-lightbox="gallery" data-title="Long Run">
+          <img src="https://images.pexels.com/photos/2402772/pexels-photo-2402772.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600" alt="Long run">
+        </a>
+        <a href="https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg" data-lightbox="gallery" data-title="Group Run">
+          <img src="https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600" alt="Group run">
+        </a>
+        <a href="https://images.pexels.com/photos/2402778/pexels-photo-2402778.jpeg" data-lightbox="gallery" data-title="Sunset Ride">
+          <img src="https://images.pexels.com/photos/2402778/pexels-photo-2402778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=600" alt="Sunset ride">
+        </a>
+      </div>
     </section>
 
-    <!-- Sponsorship Section -->
-    <section id="sponsorship" class="py-20 bg-orange-600 text-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Join My Journey</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                I'm preparing for world marathons like Chicago, London, and Tokyo. Your sponsorship can help make this dream a reality.
-            </p>
-            <a href="#contact" class="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3 rounded-full font-semibold inline-block transition" data-aos="zoom-in">Sponsor Me</a>
+    <!-- SPONSORSHIP -->
+    <section id="sponsorship">
+      <div class="container">
+        <div class="sponsor-inner">
+          <h2>Fuel My Dream — Sponsor My World Marathon Journey</h2>
+          <p>Help me represent Nepal on the global stage — support travel, training, gear and recovery so I can chase finishes in Chicago, London, Tokyo and more.</p>
+          <div class="sponsor-row">
+            <a class="btn btn-primary" href="mailto:team.nirmal@gmail.com?subject=Sponsor%20Enquiry%20for%20Nirmal%20Lamsal">Sponsor Me</a>
+            <a class="btn btn-ghost" href="#contact">Contact Team</a>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Blog Section -->
-    <section id="blog" class="py-20 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">My Blog</h2>
-            <div class="max-w-3xl mx-auto">
-                <article class="bg-white p-8 rounded-lg shadow-md mb-8" data-aos="fade-up">
-                    <h3 class="text-2xl font-bold mb-4">Peyong Frozen Lake Marathon Experience</h3>
-                    <p class="text-gray-700 mb-4">Running from sea level to 4000 meters altitude was one of the most challenging experiences of my life...</p>
-                    <div class="flex items-center text-gray-500 text-sm">
-                        <span>Posted on: June 15, 2023</span>
-                    </div>
-                </article>
-                <div class="bg-white p-8 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="100">
-                    <h4 class="text-xl font-bold mb-4">Leave a Comment</h4>
-                    <form>
-                        <div class="mb-4">
-                            <input type="text" placeholder="Your Name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600">
-                        </div>
-                        <div class="mb-4">
-                            <textarea placeholder="Your Comment" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600" rows="4"></textarea>
-                        </div>
-                        <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg transition">Post Comment</button>
-                    </form>
-                </div>
-            </div>
+    <!-- BLOG -->
+    <section id="blog" class="container" style="padding-top:40px;padding-bottom:40px">
+      <h2 style="color:var(--electric);margin-bottom:14px">Blog & Experiences</h2>
+
+      <div class="cards">
+        <a href="www.youtube.com" class="card-link">
+	<article class="card">
+          <img src="https://images.pexels.com/photos/2402772/pexels-photo-2402772.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800" alt="blog">
+          <h3>My First Ultra — Lessons & Reflection</h3>
+          <p>A deep look into the training, nutrition, and mindset that got me across 100+ km. (Dummy excerpt)</p>
+        </article>
+	</a>
+	
+	<a href="www.instagram.com" class="card-link">
+        <article class="card">
+          <img src="https://images.pexels.com/photos/618612/pexels-photo-618612.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800" alt="blog">
+          <h3>Running at High Altitude — Peyong Frozen Lake</h3>
+          <p>Experience from a race that climbs to 4000m — cold, altitude, and grit. (Dummy excerpt)</p>
+        </article>
+	</a>
+	
+	
+	<a href="www.facebook.com" class="card-link">	
+        <article class="card">
+          <img src="https://images.pexels.com/photos/936094/pexels-photo-936094.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800" alt="blog">
+          <h3>Balancing Marathon Training & Banking Career</h3>
+          <p>How I train around a demanding job and still push for performance. (Dummy excerpt)</p>
+        </article>
+	</a>
+      </div>
+	<div class="sponsor-row">
+            <a class="btn btn-primary" href="https://blog.razu.com.np/">Read More from My Blog about my Experiences</a>
         </div>
+
+      
+
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Get In Touch</h2>
-            <div class="max-w-2xl mx-auto">
-                <form class="bg-gray-100 p-8 rounded-lg shadow-md" data-aos="fade-up">
-                    <div class="mb-4">
-                        <label for="name" class="block text-gray-700 mb-2">Name</label>
-                        <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600">
-                    </div>
-                    <div class="mb-4">
-                        <label for="email" class="block text-gray-700 mb-2">Email</label>
-                        <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600">
-                    </div>
-                    <div class="mb-6">
-                        <label for="message" class="block text-gray-700 mb-2">Message</label>
-                        <textarea id="message" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-600" rows="5"></textarea>
-                    </div>
-                    <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-full font-semibold w-full transition">Send Message</button>
-                </form>
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <h2 style="margin:0 0 8px;font-family:Montserrat;color:var(--electric)">Contact</h2>
+          <p class="muted-t">Reach out to Nirmal's team for sponsorship, media or event invitations.</p>
+
+          <form class="contact-grid" method="POST" action="backend/contact.php" novalidate>
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="email" name="email" placeholder="Your email" required>
+            <input type="text" name="subject" placeholder="Subject (optional)">
+            <textarea name="message" placeholder="Your message" required></textarea>
+
+            <div style="grid-column:1/3;display:flex;justify-content:space-between;align-items:center">
+              <div class="muted-t">We normally respond within 48 hours.</div>
+              <div class="contact-actions">
+                <button type="submit" class="btn btn-primary">Send Message</button>
+                <a class="btn btn-ghost" href="mailto:team.nirmal@gmail.com">Email Team</a>
+              </div>
             </div>
+          </form>
         </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between">
-                <div class="mb-8 md:mb-0">
-                    <h3 class="text-2xl font-bold mb-4">NIRMAL LAMSAL</h3>
-                    <p class="text-gray-400">Passionate Runner & Cyclist</p>
-                </div>
-                <div class="mb-8 md:mb-0">
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About</a></li>
-                        <li><a href="#marathons" class="text-gray-400 hover:text-white transition">Marathons</a></li>
-                        <li><a href="#sponsorship" class="text-gray-400 hover:text-white transition">Sponsorship</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Connect With Me</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="facebook"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="linkedin"></i></a>
-                    </div>
-                </div>
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <strong style="color:var(--white)">About</strong>
+            <div style="margin-top:8px;color:var(--muted);max-width:260px">Nirmal Lamsal — passionate runner & cyclist from Nepal. Representing grit and discovery through long-distance endurance sports.</div>
+          </div>
+
+          <div class="footer-col">
+            <strong style="color:var(--white)">Quick Links</strong>
+            <div style="margin-top:8px;color:var(--muted)">
+              <div><a href="#about">About</a></div>
+              <div><a href="#marathons">Marathons</a></div>
+              <div><a href="#gallery">Gallery</a></div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2023 Nirmal Lamsal. All rights reserved.</p>
+          </div>
+
+          <div class="footer-col">
+            <strong style="color:var(--white)">Connect</strong>
+            <div style="margin-top:8px" class="socials">
+              <a href="#" aria-label="Instagram">Instagram</a>
+              <a href="#" aria-label="Facebook">Facebook</a>
+              <a href="#" aria-label="Strava">Strava</a>
             </div>
+          </div>
         </div>
+
+        <div class="copyright">
+          &copy; 2025 Nirmal Lamsal · All Rights Reserved
+        </div>
+      </div>
     </footer>
 
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
+  </main>
 
-        // Mobile menu toggle
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
+  <!-- Lightbox2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
-        // Lightbox functionality
-        function openLightbox(src) {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = src;
-            lightbox.style.display = 'flex';
-        }
+  <!-- Minimal JS to enhance accessibility (no animations) -->
+  <script>
+    // enable lightbox options (optional)
+    if(window.lightbox){
+      lightbox.option({
+        'resizeDuration': 150,
+        'wrapAround': true,
+        'disableScrolling': false
+      });
+    }
+  </script>
 
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-
-        // Form submission
-        document.querySelector('#contact form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // In a real implementation, you would send this data to your server
-            // For now, we'll just log it and show an alert
-            console.log({name, email, message});
-            alert('Thank you for your message! I will get back to you soon.');
-            
-            // Reset form
-            this.reset();
-        });
-
-        // Feather icons
-        feather.replace();
-    </script>
+  <!-- Disqus noscript fallback -->
+  <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
 </body>
 </html>
