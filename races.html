@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Race History | Nirmal Lamsal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .table-container {
+            max-width: 1100px; margin: 120px auto 60px;
+            background: #fff; border-radius: var(--radius-xl);
+            padding: 2.5rem; box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+        th, td { padding: 1rem; border-bottom: 1px solid var(--border-color); text-align: left; }
+        th { font-family: var(--font-heading); background: #f8fafc; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-main); }
+        tr:hover td { background: rgba(79,188,203,0.03); }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-weight: 600; color: var(--text-main);
+            border: 1.5px solid var(--border-color); padding: 0.5rem 1.2rem;
+            border-radius: 10px; transition: var(--transition);
+        }
+        .back-link:hover { background: var(--primary-light); border-color: var(--primary); }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <div class="table-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <h2 style="font-family: var(--font-heading); color: var(--text-main);">Complete Race History</h2>
+                <a href="index.html#marathons" class="back-link">← Back to Site</a>
+            </div>
+            <table id="races-table">
+                <thead>
+                    <tr><th>Race Name</th><th>Type</th><th>Participation</th><th>Distance (KM)</th><th>Time</th></tr>
+                </thead>
+                <tbody id="races-body">
+                    <tr><td colspan="5" style="text-align:center; color:var(--text-muted);">Loading race data from database…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // Original logic unchanged – only visual style improved
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxE7Mvk2bFUaL_BCvwhjTsB2FMyxLl-sQGn59cw4c4GRURlD3O6mtQccyEz7hIAGCxTTQ/exec';
+        document.addEventListener('DOMContentLoaded', async () => {
+            const tbody = document.getElementById('races-body');
+            function formatTime(t) {
+                if (!t) return '-';
+                if (t.includes('T') && t.includes('Z')) {
+                    try {
+                        const d = new Date(t);
+                        return [d.getHours(),d.getMinutes(),d.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':');
+                    } catch(e) {}
+                }
+                return t;
+            }
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                if (data.status === 'success' && data.data.length) {
+                    tbody.innerHTML = data.data.map(r => `<tr>
+                        <td><strong>${r.RaceName||'-'}</strong></td>
+                        <td>${r.Type||'-'}</td>
+                        <td>${r.Participation||'-'}</td>
+                        <td>${r.Distance||'-'}</td>
+                        <td>${formatTime(r.Time)}</td>
+                    </tr>`).join('');
+                } else tbody.innerHTML = '<tr><td colspan="5">No race data found.</td></tr>';
+            } catch(e) { tbody.innerHTML = '<tr><td colspan="5">Failed to load race data.</td></tr>'; }
+        });
+    </script>
+</body>
+</html>
